@@ -1,7 +1,6 @@
 mode: rule
 mixed-port: 7897
 allow-lan: false
-log-level: info
 ipv6: false
 unified-delay: true
 profile:
@@ -9,7 +8,7 @@ profile:
 dns:
   enabled: true
   ipv6: true
-  listen: 127.0.0.1:53
+  listen: 127.0.0.1:5353
   enhanced-mode: fake-ip
   use-hosts: true
   nameserver:
@@ -32,5 +31,13 @@ proxy-groups:
   proxies:
   - DIRECT
   - direct
+rule-providers:
+  reject:
+    type: http
+    behavior: classical
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
+    path: ./ruleset/reject.yaml
+    interval: 86400
 rules:
+  - RULE-SET,reject,REJECT
   - MATCH,DIRECT
